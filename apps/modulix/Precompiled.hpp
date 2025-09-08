@@ -47,8 +47,6 @@
 using namespace std::complex_literals;
 using namespace std::chrono_literals;
 
-#include "Log/Log.hpp"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #define ImDrawIdx unsigned int
@@ -71,3 +69,5 @@ inline bool SliderPercentage(const char* label, float* v, float v_min, float v_m
   return true;
 }
 };
+
+#include "Log/Log.hpp"
