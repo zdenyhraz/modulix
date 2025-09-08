@@ -1,0 +1,15 @@
+build/
+install/
+bin/
+obj/
+.cache/
+__pycache__/
+*_install/
+
+*.zip
+*.dump
+*.dll
+*.exe
+*.py[cod]
+*.pt
+*.onnx
