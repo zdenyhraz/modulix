@@ -1,25 +1,28 @@
 #pragma once
-#include "Module/Module.hpp"
+#include "Engine/Module.hpp"
 
-class DrawObjects : public Module {
-  void Process() override {
+class DrawObjects : public Module
+{
+  void Process() override
+  {
     LOG_SCOPE("DrawObjects");
     auto image = GetInputParameter<cv::Mat>("image").clone();
 
     cv::normalize(image, image, 0, 255, cv::NORM_MINMAX);
     image.convertTo(image, CV_8U);
 
-    const auto &bboxes = GetInputParameter<std::vector<cv::Rect>>("objects");
+    const auto& bboxes = GetInputParameter<std::vector<cv::Rect>>("objects");
     const auto color = cv::Scalar(0, 0, 255);
     const auto thickness = std::clamp(0.002 * image.rows, 1., 100.);
 
-    for (const auto &bbox : bboxes)
+    for (const auto& bbox : bboxes)
       cv::rectangle(image, bbox, color, thickness);
     SetOutputParameter("image", image);
   }
 
 public:
-  DrawObjects() {
+  DrawObjects()
+  {
     GenerateModuleName();
     DefineInputParameter<cv::Mat>("image");
     DefineInputParameter<std::vector<cv::Rect>>("objects");

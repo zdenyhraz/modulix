@@ -1,8 +1,10 @@
 #pragma once
-#include "Module/Module.hpp"
+#include "Engine/Module.hpp"
 
-class BlurImage : public Module {
-  void Process() override {
+class BlurImage : public Module
+{
+  void Process() override
+  {
     auto image = GetInputParameter<cv::Mat>("image").clone();
     const auto blurAmountX = GetParameter<float>("relative blur x");
     const auto blurAmountY = GetParameter<float>("relative blur y");
@@ -14,7 +16,8 @@ class BlurImage : public Module {
   }
 
 public:
-  BlurImage() {
+  BlurImage()
+  {
     GenerateModuleName();
     DefineInputParameter<cv::Mat>("image");
     DefineOutputParameter<cv::Mat>("image");

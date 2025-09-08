@@ -10,7 +10,7 @@ inline void LaunchAsync(T&& fun)
         {
           fun();
         }
-        catch (const ShenanigansException& e)
+        catch (const Exception& e)
         {
           e.Log();
         }
@@ -20,4 +20,21 @@ inline void LaunchAsync(T&& fun)
         }
       })
       .detach();
+}
+
+template <typename T>
+inline void Launch(T&& fun)
+{
+  try
+  {
+    fun();
+  }
+  catch (const Exception& e)
+  {
+    e.Log();
+  }
+  catch (const std::exception& e)
+  {
+    LOG_EXCEPTION(e);
+  }
 }

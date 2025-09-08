@@ -103,9 +103,9 @@ try
     ImPlot::ShowDemoWindow();
 
   ImGuiLogger::Render();
-  ImGuiPlot::Render();
+  // ImGuiPlot::Render();
 }
-catch (const ShenanigansException& e)
+catch (const Exception& e)
 {
   e.Log();
 }

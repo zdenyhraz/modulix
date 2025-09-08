@@ -1,4 +1,5 @@
 #include "Gui/Application.hpp"
+#include "WorkflowEditorWindow.hpp"
 
 int main(int argc, char** argv)
 try
@@ -6,6 +7,7 @@ try
   Application app("modulix");
   app.SetIniPath("apps/modulix/data/imgui.ini");
   app.SetFontPath("apps/modulix/data/Play-Regular.ttf");
+  app.AddWindow<WorkflowEditorWindow>();
   app.Run();
   return EXIT_SUCCESS;
 }

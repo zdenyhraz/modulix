@@ -34,6 +34,8 @@
 #include <bit>
 #include <ranges>
 #include <future>
+#include <any>
+#include <typeindex>
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
@@ -71,3 +73,4 @@ inline bool SliderPercentage(const char* label, float* v, float v_min, float v_m
 };
 
 #include "Log/Log.hpp"
+#include "Plot/Plot.hpp"

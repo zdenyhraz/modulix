@@ -20,7 +20,7 @@ using MainLogger = TerminalLogger;
 #define LOG_ERROR(...) MainLogger::Message(Logger::LogLevel::Error, __VA_ARGS__)
 
 // exception logging
-#define EXCEPTION(...) ShenanigansException(CreateMessage(__VA_ARGS__), std::source_location::current())
+#define EXCEPTION(...) Exception(CreateMessage(__VA_ARGS__), std::source_location::current())
 #define LOG_EXCEPTION(e) LOG_ERROR("Error: {}", e.what())
 #define LOG_UNKNOWN_EXCEPTION LOG_ERROR("Unknown error")
 
