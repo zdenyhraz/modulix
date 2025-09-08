@@ -31,7 +31,6 @@ void Application::SetPlotWindowCount(size_t count)
 
 void Application::Initialize()
 {
-  PROFILE_FUNCTION;
   for (auto& window : mWindows)
     window->Initialize();
 }
@@ -68,7 +67,6 @@ void Application::Run()
     ImGuiNewFrame();
     Render();
     ImGuiRender(window, io);
-    PROFILE_FRAME;
   }
   ImGuiShutdown();
   GLFWShutdown(window);
@@ -77,7 +75,6 @@ void Application::Run()
 void Application::Render()
 try
 {
-  PROFILE_FUNCTION;
   if (ImGui::Begin(appName.c_str(), nullptr, ImGuiWindowFlags_MenuBar))
   {
     if (ImGui::BeginMenuBar())

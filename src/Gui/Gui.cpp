@@ -2,7 +2,6 @@
 
 void GLFWInitialize()
 {
-  PROFILE_FUNCTION;
   static auto GLFWErrorCallback = [](int error, const char* description) { LOG_ERROR("GLFWError {}: {}", error, description); };
   glfwSetErrorCallback(GLFWErrorCallback);
   if (not glfwInit())
@@ -12,7 +11,6 @@ void GLFWInitialize()
 
 GLFWwindow* GLFWCreateWindow(int width, int height, bool hidden)
 {
-  PROFILE_FUNCTION;
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -26,7 +24,6 @@ GLFWwindow* GLFWCreateWindow(int width, int height, bool hidden)
 
 void GLFWInitializeGL(GLFWwindow* window)
 {
-  PROFILE_FUNCTION;
   glfwMakeContextCurrent(window);
   gladLoadGL();
   glfwSwapInterval(1);
@@ -40,7 +37,6 @@ void GLFWSetWindowCallback(GLFWwindow* window, GLFWkeyfun callback)
 
 void ImGuiSetDefaultStyle()
 {
-  PROFILE_FUNCTION;
   ImGuiSetHazelTheme();
 }
 
@@ -75,7 +71,6 @@ float GetResolutionScale()
 
 ImGuiIO& ImGuiInitialize(GLFWwindow* window, float baseScale, const std::filesystem::path& iniPath, const std::filesystem::path& fontPath)
 {
-  PROFILE_FUNCTION;
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImPlot::CreateContext();
@@ -138,7 +133,6 @@ ImGuiIO& ImGuiInitialize(GLFWwindow* window, float baseScale, const std::filesys
 
 void ImGuiNewFrame()
 {
-  PROFILE_FUNCTION;
   glfwPollEvents();
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
@@ -147,7 +141,6 @@ void ImGuiNewFrame()
 
 void ImGuiRender(GLFWwindow* window, ImGuiIO& io)
 {
-  PROFILE_FUNCTION;
   ImGui::Render();
   int width, height;
   glfwGetFramebufferSize(window, &width, &height);
@@ -162,7 +155,6 @@ void ImGuiRender(GLFWwindow* window, ImGuiIO& io)
 
 void RenderPlatformWindows(ImGuiIO& io)
 {
-  PROFILE_FUNCTION;
   if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
   {
     GLFWwindow* backup_current_context = glfwGetCurrentContext();
@@ -180,13 +172,11 @@ void HandleIO(GLFWwindow* window)
 
 void SwapBuffers(GLFWwindow* window)
 {
-  PROFILE_FUNCTION;
   glfwSwapBuffers(window);
 }
 
 void ImGuiShutdown()
 {
-  PROFILE_FUNCTION;
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImPlot::DestroyContext();
@@ -195,7 +185,6 @@ void ImGuiShutdown()
 
 void GLFWShutdown(GLFWwindow* window)
 {
-  PROFILE_FUNCTION;
   glfwDestroyWindow(window);
   glfwTerminate();
 }

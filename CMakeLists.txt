@@ -65,6 +65,40 @@ endif()
 include_directories(${ONNXRUNTIME_DIR}/include)
 target_link_libraries(modulix PRIVATE ${ONNXRUNTIME_LIBS})
 
+# glad
+add_subdirectory(libs/glad)
+target_link_libraries(modulix PRIVATE glad)
+add_compile_definitions(IMGUI_IMPL_OPENGL_LOADER_GLAD)
+
+# glfw
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(libs/glfw)
+target_link_libraries(modulix PRIVATE glfw)
+
+# imgui
+include_directories(libs/imgui)
+include_directories(libs/imgui/misc/cpp)
+include_directories(libs/imgui/backends)
+file(GLOB SRC_IMGUI CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/libs/imgui/*.cpp ${CMAKE_SOURCE_DIR}/libs/imgui/misc/cpp/imgui_stdlib.cpp)
+set(SRC_IMGUI ${SRC_IMGUI} CACHE INTERNAL "ImGui source files")
+set(SRC_IMGUI_BACKEND ${CMAKE_SOURCE_DIR}/libs/imgui/backends/imgui_impl_glfw.cpp ${CMAKE_SOURCE_DIR}/libs/imgui/backends/imgui_impl_opengl3.cpp CACHE INTERNAL "ImGui backend source files")
+target_sources(modulix PRIVATE ${SRC_IMGUI} ${SRC_IMGUI_BACKEND})
+
+# implot
+include_directories(libs/implot)
+file(GLOB SRC_IMPLOT CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/libs/implot/*.cpp)
+target_sources(modulix PRIVATE ${SRC_IMPLOT})
+
+# imgui-node-editor
+include_directories(libs/imgui-node-editor)
+file(GLOB SRC_IMGUI_NODES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/libs/imgui-node-editor/*.cpp)
+set(SRC_IMGUI_NODES ${SRC_IMGUI_NODES} CACHE INTERNAL "ImGui Nodes source files")
+file(GLOB SRC_IMGUI_NODES_EXTRA CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/libs/imgui-node-editor/examples/blueprints-example/utilities/drawing.cpp ${CMAKE_SOURCE_DIR}/libs/imgui-node-editor/examples/blueprints-example/utilities/widgets.cpp)
+set(SRC_IMGUI_NODES_EXTRA ${SRC_IMGUI_NODES_EXTRA} CACHE INTERNAL "ImGui Nodes extra source files")
+target_sources(modulix PRIVATE ${SRC_IMGUI_NODES} ${SRC_IMGUI_NODES_EXTRA})
+
 # custom
 include_directories(libs)
 include_directories(src)
@@ -75,6 +109,7 @@ file(GLOB_RECURSE SRC_MODULIX CONFIGURE_DEPENDS
  src/Log/*.cpp
  src/Modules/*.cpp
  src/Onnx/*.cpp
+ src/Plot/*.cpp
  src/Utils/*.cpp
 )
 
@@ -83,7 +118,7 @@ file(GLOB_RECURSE SRC_GUI CONFIGURE_DEPENDS src/Gui/*.cpp)
 
 # modulix app sources
 file(GLOB_RECURSE SRC_MODULIX_APP CONFIGURE_DEPENDS apps/modulix/*.cpp)
-target_sources(modulix PRIVATE ${SRC_MODULIX} ${SRC_MODULIX_APP})
+target_sources(modulix PRIVATE ${SRC_MODULIX} ${SRC_MODULIX_APP} ${SRC_GUI})
 
 
 

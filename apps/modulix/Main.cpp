@@ -1,8 +1,12 @@
+#include "Gui/Application.hpp"
 
 int main(int argc, char** argv)
 try
 {
-  LOG_DEBUG("Hello world!");
+  Application app("modulix");
+  app.SetIniPath("apps/modulix/data/imgui.ini");
+  app.SetFontPath("apps/modulix/data/Play-Regular.ttf");
+  app.Run();
   return EXIT_SUCCESS;
 }
 catch (const std::exception& e)
