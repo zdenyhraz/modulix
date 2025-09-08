@@ -10,10 +10,6 @@ inline void LaunchAsync(T&& fun)
         {
           fun();
         }
-        catch (const Exception& e)
-        {
-          e.Log();
-        }
         catch (const std::exception& e)
         {
           LOG_EXCEPTION(e);
@@ -28,10 +24,6 @@ inline void Launch(T&& fun)
   try
   {
     fun();
-  }
-  catch (const Exception& e)
-  {
-    e.Log();
   }
   catch (const std::exception& e)
   {

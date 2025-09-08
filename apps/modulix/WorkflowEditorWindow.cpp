@@ -53,6 +53,7 @@ void WorkflowEditorWindow::RunRepeat()
 
 void WorkflowEditorWindow::CreateWorkflow()
 {
+  editor.workflow.SetName("Onnx object detection");
   auto& load = editor.workflow.AddModule<LoadImage>();
   auto& onnx = editor.workflow.AddModule<OnnxDetection>();
   auto& draw = editor.workflow.AddModule<DrawObjects>();

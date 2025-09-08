@@ -21,7 +21,7 @@ using MainLogger = TerminalLogger;
 
 // exception logging
 #define EXCEPTION(...) Exception(CreateMessage(__VA_ARGS__), std::source_location::current())
-#define LOG_EXCEPTION(e) LOG_ERROR("Error: {}", e.what())
+#define LOG_EXCEPTION(e) LOG_ERROR(e.what())
 #define LOG_UNKNOWN_EXCEPTION LOG_ERROR("Unknown error")
 
 // progress logging

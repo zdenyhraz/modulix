@@ -2,6 +2,8 @@
 #include "Module.hpp"
 #include "Modules/Start.hpp"
 
+#define WORKFLOW_EXCEPTION(...) Exception(fmt::format("[Workflow {}] Error: {}", GetName(), CreateMessage(__VA_ARGS__)), std::source_location::current())
+
 class Workflow
 {
   std::string name = "Default workflow";
@@ -61,6 +63,7 @@ public:
     // TODO: serialize connections to json
   }
 
+  void SetName(const std::string& workflowName) { name = workflowName; }
   const std::string& GetName() { return name; }
   const std::vector<std::unique_ptr<Module>>& GetModules() { return modules; }
   Module& GetStart() { return *modules.front(); }
@@ -90,22 +93,32 @@ public:
   }
   catch (const std::exception& e)
   {
-    LOG_ERROR("Workflow '{}' error: {}", GetName(), e.what());
+    throw WORKFLOW_EXCEPTION(e.what());
   }
 
   void Load()
+  try
   {
     LOG_SCOPE("Workflow Load");
     LOG_DEBUG("Loading workflow '{}'", GetName());
     for (auto& module : modules)
       module->Load();
   }
+  catch (const std::exception& e)
+  {
+    throw WORKFLOW_EXCEPTION(e.what());
+  }
 
   void Unload()
+  try
   {
     LOG_DEBUG("Unloading workflow '{}'", GetName());
     for (auto& module : modules)
       module->Unload();
+  }
+  catch (const std::exception& e)
+  {
+    throw WORKFLOW_EXCEPTION(e.what());
   }
 
   void Reset()

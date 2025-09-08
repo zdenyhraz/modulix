@@ -1,5 +1,7 @@
 #pragma once
 
+#define MODULE_EXCEPTION(...) Exception(fmt::format("[Module {}] Error: {}", GetName(), CreateMessage(__VA_ARGS__)), std::source_location::current())
+
 class Module
 {
   // TODO: in-out parameters - dont copy on SetOutputParameter
@@ -299,5 +301,3 @@ public:
     return std::nullopt;
   }
 };
-
-#define MODULE_EXCEPTION(...) Exception(fmt::format("Module {} error: {}", GetName(), CreateMessage(__VA_ARGS__)), std::source_location::current())
