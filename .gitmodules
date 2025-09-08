@@ -7,3 +7,12 @@
 [submodule "libs/fmt"]
 	path = libs/fmt
 	url = https://github.com/fmtlib/fmt.git
+[submodule "libs/implot"]
+	path = libs/implot
+	url = https://github.com/epezent/implot.git
+[submodule "libs/imgui-node-editor"]
+	path = libs/imgui-node-editor
+	url = https://github.com/thedmd/imgui-node-editor.git
+[submodule "libs/imgui"]
+	path = libs/imgui
+	url = https://github.com/thedmd/imgui.git
