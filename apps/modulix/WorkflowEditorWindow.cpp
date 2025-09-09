@@ -59,9 +59,9 @@ void WorkflowEditorWindow::CreateWorkflow()
   auto& draw = editor.workflow.AddModule<DrawObjects>();
   auto& save = editor.workflow.AddModule<SaveImage>();
 
-  load.SetParameter("image path", std::string("data/umbellula/benchmark/umbellula.jpg"));
+  load.SetParameter("image path", std::string("data/umbellula/umbellula.jpg"));
   onnx.SetParameter("model path", std::string("data/umbellula/umbellula.onnx"));
-  save.SetParameter("image path", std::string("data/umbellula/benchmark/result_cpp.jpg"));
+  save.SetParameter("image path", std::string("data/umbellula/result_cpp.jpg"));
 
   editor.workflow.Connect(editor.workflow.GetStart(), onnx);
   editor.workflow.Connect(load, onnx, "image");
