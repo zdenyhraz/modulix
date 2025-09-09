@@ -6,7 +6,7 @@ from tools.setup import configuration, buildtools, opencv, onnxruntime
 
 
 def configure(args):
-    log.info(f"Configuring {args.targets}")
+    log.info(f"Configuring targets: {args.targets}")
     configure_args = {
         'CMAKE_BUILD_TYPE': args.build_type,
         'OPENCV_DIR': args.opencv_dir,
@@ -14,16 +14,17 @@ def configure(args):
     }
     os.makedirs(args.build_dir, exist_ok=True)
     utils.run(f"cmake -B {args.build_dir} {utils.generate_configure_args(configure_args)} {f'-G {args.generator}' if args.generator else ''}")
-    log.info(f'{args.targets} configured successfully')
+    log.info(f'Targets: {args.targets} configuration complete')
 
 
 def build(args):
-    log.info(f"Building {args.targets}")
+    log.info(f"Building targets: {args.targets}")
     utils.run(f'cmake --build {args.build_dir} --config {args.build_type} --target {args.targets} -j {args.jobs}')
-    log.info(f'{args.targets} built successfully')
+    log.info(f'Targets: {args.targets} build complete')
 
 
 if __name__ == '__main__':
+    log.info("Setting up Modulix")
     parser = argparse.ArgumentParser(description='Build script')
     parser.add_argument('--compiler', help='compiler', type=str, required=False, default='msvc' if utils.windows() else 'gcc')
     parser.add_argument('--generator', help='generator', type=str, required=False, default=None if utils.windows() else 'Ninja')
@@ -37,7 +38,7 @@ if __name__ == '__main__':
     parser.add_argument('--jobs', help='build jobs', type=int, required=False, default=os.cpu_count())
     args = parser.parse_args()
 
-    log.info(f"Setting up {args.targets}")
+    log.info(f"Setting up targets: {args.targets}")
     log.debug(f'system: {platform.system()}')
     log.debug(f'machine: {platform.machine()}')
     for arg, val in vars(args).items():
@@ -46,10 +47,11 @@ if __name__ == '__main__':
     configuration.check(args)
     buildtools.setup(args.compiler, args.generator, args.opengl, args.build_type)
 
-    log.info("Setting up C++ libraries")
+    log.info("Setting up C++ libs")
     args.onnxruntime_dir = args.onnxruntime_dir or onnxruntime.setup(args.build_type, args.jobs)
     args.opencv_dir = args.opencv_dir or opencv.setup(args.build_type, args.jobs)
-    log.info("C++ libraries set up successfully")
+    log.info("C++ libs setup complete")
 
     configure(args)
     build(args)
+    log.info("Modulix setup complete")

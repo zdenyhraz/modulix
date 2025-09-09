@@ -1,4 +1,5 @@
 import platform
+from tools.utils import log
 
 
 def check_platform():
@@ -26,7 +27,9 @@ def check_build_type(build_type):
 
 
 def check(args):
+    log.info("Checking C++ configuration")
     check_platform()
     check_compiler(args.compiler)
     check_generator(args.generator)
     check_build_type(args.build_type)
+    log.info("C++ configuration check complete")

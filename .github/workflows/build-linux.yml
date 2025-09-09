@@ -37,5 +37,5 @@ jobs:
           key: ${{ runner.os }}-onnxruntime-cache
 
       - name: Build
-        run: sudo python -u build.py --ci --compiler ${{ matrix.compiler }} --build_type ${{ matrix.build_type }} --jobs 4
+        run: sudo python -u setup.py --ci --compiler ${{ matrix.compiler }} --build_type ${{ matrix.build_type }} --jobs 4
 
