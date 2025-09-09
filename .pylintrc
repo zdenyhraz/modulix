@@ -1,0 +1,8 @@
+[MASTER]
+max-line-length=180
+
+[MESSAGES CONTROL]
+disable=missing-docstring,invalid-name,try-except-raise
+
+[REPORTS]
+output-format=colorized

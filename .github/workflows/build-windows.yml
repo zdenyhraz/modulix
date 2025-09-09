@@ -1,0 +1,39 @@
+name: build-windows
+
+on: [push, pull_request]
+
+env:
+  CI: ON
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - compiler: msvc
+            build_type: Release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: OpenCV cache
+        id: opencv-cache
+        uses: actions/cache@v4
+        with:
+          path: ./libs/opencv_install
+          key: ${{ runner.os }}-opencv-cache
+
+      - name: ONNX cache
+        id: onnxruntime-cache
+        uses: actions/cache@v4
+        with:
+          path: ./libs/onnxruntime_install
+          key: ${{ runner.os }}-onnxruntime-cache
+
+      - name: Build
+        run: python -u build.py --ci --compiler ${{ matrix.compiler }} --build_type ${{ matrix.build_type }} --jobs 4
+

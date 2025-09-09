@@ -1,0 +1,41 @@
+name: build-linux
+
+on: [push, pull_request]
+
+env:
+  CI: ON
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - compiler: gcc
+            build_type: Release
+          - compiler: clang
+            build_type: Release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: OpenCV cache
+        id: opencv-cache
+        uses: actions/cache@v4
+        with:
+          path: ./libs/opencv_install
+          key: ${{ runner.os }}-opencv-cache
+
+      - name: ONNX cache
+        id: onnxruntime-cache
+        uses: actions/cache@v4
+        with:
+          path: ./libs/onnxruntime_install
+          key: ${{ runner.os }}-onnxruntime-cache
+
+      - name: Build
+        run: sudo python -u build.py --ci --compiler ${{ matrix.compiler }} --build_type ${{ matrix.build_type }} --jobs 4
+

@@ -14,7 +14,7 @@ void WorkflowEditorWindow::Initialize()
 
 void WorkflowEditorWindow::Render()
 {
-  if (ImGui::BeginTabItem("MicroserviceEditor"))
+  if (ImGui::BeginTabItem("Workflow Editor"))
   {
     ImGui::Separator();
     if (ImGui::Button("Run"))
