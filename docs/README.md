@@ -1,6 +1,14 @@
 # Modulix
 
+<p align="left">
+<a href="https://github.com/zdenyhraz/modulix/actions/workflows/build-windows.yml"><img src="https://github.com/zdenyhraz/modulix/actions/workflows/build-windows.yml/badge.svg"/></a>
+<a href="https://github.com/zdenyhraz/modulix/actions/workflows/build-linux.yml"><img src="https://github.com/zdenyhraz/modulix/actions/workflows/build-linux.yml/badge.svg"/></a>
+<br>
+</p>
+
 <img src="gui.png" width="100%">
+
+
 
 ### Setup
 
