@@ -12,8 +12,8 @@ opencv_cmake_args = {
 
     # simd
     'ENABLE_SIMD': 'ON',
-    'CPU_BASELINE': 'AVX2',
-    'CPU_DISPATCH': 'SSE4_1;SSE4_2;AVX;AVX2',
+    # 'CPU_BASELINE': 'AVX2',
+    # 'CPU_DISPATCH': 'SSE4_1;SSE4_2;AVX;AVX2',
 
     # extra modules
     'OPENCV_EXTRA_MODULES_PATH': '',  # '../opencv_contrib/modules',
