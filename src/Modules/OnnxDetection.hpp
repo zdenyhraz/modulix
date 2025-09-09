@@ -17,7 +17,7 @@ class OnnxDetection : public Module
 
   void Load() override
   {
-    model = OnnxModel(GetProjectPath(GetParameter<std::string>("model path")), "onnx_detection_perf", {"input"}, {"boxes", "labels", "scores"});
+    model = OnnxModel(GetProjectPath(GetParameter<std::string>("model path")), "onnx_detection", {"input"}, {"boxes", "labels", "scores"});
     classNames = LoadClassNames(GetProjectPath(GetParameter<std::string>("classes path")));
     LOG_DEBUG("Classes: ['{}']", fmt::join(classNames, "', '"));
   }

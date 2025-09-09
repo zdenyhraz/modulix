@@ -23,9 +23,6 @@ void WorkflowEditorWindow::Render()
     if (ImGui::Button("Run async"))
       LaunchAsync([&]() { Run(); });
     ImGui::SameLine();
-    if (ImGui::Button("Run repeat"))
-      LaunchAsync([&]() { RunRepeat(); });
-    ImGui::SameLine();
     if (ImGui::Button("Show flow"))
       editor.ShowFlow();
 
@@ -40,15 +37,6 @@ void WorkflowEditorWindow::Run()
   LOG_SCOPE("Workflow Load+Run");
   editor.workflow.Load();
   editor.workflow.Run();
-}
-
-void WorkflowEditorWindow::RunRepeat()
-{
-  for (int i = 0; i < 5; ++i)
-  {
-    Plot::Clear();
-    editor.workflow.Run();
-  }
 }
 
 void WorkflowEditorWindow::CreateWorkflow()

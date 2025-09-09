@@ -7,7 +7,6 @@ class WorkflowEditorWindow : public Window
   void CreateWorkflow();
   void ShowFlow();
   void Run();
-  void RunRepeat();
 
   WorkflowEditor editor;
 
