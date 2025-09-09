@@ -15,7 +15,12 @@ class OnnxDetection : public Module
     int64_t label = 0;
   };
 
-  void Load() override { model = OnnxModel(GetProjectPath(GetParameter<std::string>("model path")), "onnx_detection_perf", {"input"}, {"boxes", "labels", "scores"}); }
+  void Load() override
+  {
+    model = OnnxModel(GetProjectPath(GetParameter<std::string>("model path")), "onnx_detection_perf", {"input"}, {"boxes", "labels", "scores"});
+    classNames = LoadClassNames(GetProjectPath(GetParameter<std::string>("classes path")));
+    LOG_DEBUG("Classes: ['{}']", fmt::join(classNames, "', '"));
+  }
 
   void Unload() override { model->Unload(); }
 
@@ -35,7 +40,7 @@ class OnnxDetection : public Module
     SetOutputParameter("objects", boxes);
   }
 
-  std::vector<Detection> ParseModelOutput(const std::vector<Ort::Value>& outputTensor)
+  std::vector<Detection> ParseModelOutput(const std::vector<Ort::Value>& outputTensor) const
   {
     if (outputTensor.size() != 3)
       throw MODULE_EXCEPTION("Model output size mismatch (expected 3, got {})", outputTensor.size());
@@ -56,12 +61,29 @@ class OnnxDetection : public Module
     return detections;
   }
 
+  std::vector<std::string> LoadClassNames(const std::filesystem::path& classesPath) const
+  {
+    LOG_DEBUG("Loading class names from {}", classesPath);
+    if (not std::filesystem::is_regular_file(classesPath))
+      throw MODULE_EXCEPTION("Could not find classes file '{}'", classesPath);
+
+    std::vector<std::string> classNames;
+    std::ifstream file(classesPath);
+    std::string line;
+    while (std::getline(file, line))
+      if (not line.empty() and not std::all_of(line.begin(), line.end(), isspace))
+        classNames.push_back(line);
+
+    return classNames;
+  }
+
 public:
   OnnxDetection()
   {
     GenerateModuleName();
     DefineInputParameter<cv::Mat>("image");
     DefineOutputParameter<std::vector<cv::Rect>>("objects");
-    DefineParameter<std::string>("model path", "");
+    DefineParameter<std::string>("model path", "model.onnx");
+    DefineParameter<std::string>("classes path", "classes.txt");
   }
 };

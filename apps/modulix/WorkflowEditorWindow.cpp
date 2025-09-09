@@ -61,6 +61,7 @@ void WorkflowEditorWindow::CreateWorkflow()
 
   load.SetParameter("image path", std::string("data/umbellula/umbellula.jpg"));
   onnx.SetParameter("model path", std::string("data/umbellula/umbellula.onnx"));
+  onnx.SetParameter("classes path", std::string("data/umbellula/umbellula.txt"));
   save.SetParameter("image path", std::string("data/umbellula/result_cpp.jpg"));
 
   editor.workflow.Connect(editor.workflow.GetStart(), onnx);
