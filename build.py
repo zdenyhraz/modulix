@@ -11,8 +11,6 @@ def configure(args):
         'CMAKE_BUILD_TYPE': args.build_type,
         'OPENCV_DIR': args.opencv_dir,
         'ONNXRUNTIME_DIR': args.onnxruntime_dir,
-        'CMAKE_C_FLAGS': '-O3 -march=native',
-        'CMAKE_CXX_FLAGS': '-O3 -march=native',
     }
     os.makedirs(args.build_dir, exist_ok=True)
     utils.run(f"cmake -B {args.build_dir} {utils.generate_configure_args(configure_args)} {f'-G {args.generator}' if args.generator else ''}")
