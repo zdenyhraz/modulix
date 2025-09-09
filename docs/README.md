@@ -2,7 +2,14 @@
 
 <img src="gui.png" width="100%">
 
-### TODO
+### Setup
+
+```sh
+git clone https://github.com/zdenyhraz/modulix.git --recursive
+python build.py
+```
+
+### Todo
 
 - [ ] link strength adjustment
 - [ ] "compile" workflows
