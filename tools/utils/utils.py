@@ -56,13 +56,9 @@ def find_binaries(dir):
     return binaries
 
 
-def get_root_directory(start_dir=os.getcwd()):
-    if 'build.py' in os.listdir(start_dir):
-        return start_dir
-    parent_dir = os.path.dirname(start_dir)
-    if parent_dir == start_dir:
-        return None
-    return get_root_directory(parent_dir)
+def get_root_directory(*relative_path):
+    base_path = os.path.abspath('.')
+    return os.path.join(base_path, *relative_path) if relative_path else base_path
 
 
 def get_runtime_directory(build_type):
