@@ -18,7 +18,6 @@ struct WorkflowEditor
   const float connectionThickness = 4.0f;
   const float parametersVerticalOffset = 10.0f;
   bool showFlow = false;
-  bool showFlowOnce = false;
 
   void OnStart()
   {
@@ -138,7 +137,7 @@ struct WorkflowEditor
     ImGui::TextUnformatted(label);
   }
 
-  void ShowFlow() { showFlowOnce = true; }
+  void ShowFlow() { showFlow = not showFlow; }
 
   void RenderInputPin(const Module::InputParameter& param, bool connected)
   {
@@ -243,7 +242,7 @@ struct WorkflowEditor
   {
     ed::Link(connection.GetId(), connection.inputParameter->GetId(), connection.outputParameter->GetId(), GetColor(connection.outputParameter->type), connectionThickness);
 
-    if (showFlowOnce or showFlow)
+    if (showFlow)
       if (connection.outputParameter == &connection.outputModule->GetFlowOutputParameter())
         ed::Flow(connection.GetId(), ed::FlowDirection::Backward);
   }
@@ -360,7 +359,6 @@ struct WorkflowEditor
 
     for (const auto& connection : workflow.GetConnections())
       RenderLink(connection);
-    showFlowOnce = false;
 
     HandleLinkCreate();
     HandleLinkDelete();
