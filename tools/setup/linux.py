@@ -23,7 +23,7 @@ def opengl_install():
     utils.run('apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libwayland-dev libxkbcommon-dev')
 
 
-def gcc_install(version=14):
+def gcc_install(version=13):
     utils.run('apt update')
     utils.run('apt install -y software-properties-common')
     utils.run('add-apt-repository ppa:ubuntu-toolchain-r/test')

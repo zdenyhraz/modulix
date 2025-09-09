@@ -49,7 +49,7 @@ if __name__ == '__main__':
     log.info("Setting up C++ libraries")
     args.onnxruntime_dir = args.onnxruntime_dir or onnxruntime.setup(args.build_type, args.jobs)
     args.opencv_dir = args.opencv_dir or opencv.setup(args.build_type, args.jobs)
-    log.info("Libraries set up successfully")
+    log.info("C++ libraries set up successfully")
 
     configure(args)
     build(args)

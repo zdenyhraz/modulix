@@ -317,6 +317,11 @@ struct WorkflowEditor
             ShowLabel("x Incompatible type", failColor);
             ed::RejectNewItem(ImColor(255, 0, 0), 2.0f);
           }
+          else if (std::ranges::any_of(workflow.GetConnections(), [&](const auto& conn) { return conn.inputParameter == connection.inputParameter; }))
+          {
+            ShowLabel("x Connection to parameter already exists", failColor);
+            ed::RejectNewItem(ImColor(255, 0, 0), 2.0f);
+          }
           else
           {
             ShowLabel("+ Create link", successColor);
