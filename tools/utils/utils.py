@@ -22,8 +22,12 @@ def windows():
     return platform.system() == 'Windows'
 
 
-def macos():
-    return platform.system() == 'Darwin'
+def linux_arm():
+    return linux() and (platform.machine() == "arm64" or platform.machine() == "aarch64")
+
+
+def linux_x64():
+    return linux() and not linux_arm()
 
 
 def generate_configure_args(configure_args):

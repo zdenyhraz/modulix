@@ -13,12 +13,14 @@ onnxruntime_build = False
 
 
 def onnxruntime_get_url():
-    if utils.linux():
-        return "https://github.com/microsoft/onnxruntime/releases/download/v1.20.1/onnxruntime-linux-x64-gpu-1.20.1.tgz"
-    elif utils.windows():
-        return "https://github.com/microsoft/onnxruntime/releases/download/v1.20.1/onnxruntime-win-x64-gpu-1.20.1.zip"
-    elif utils.macos():
-        return "https://github.com/microsoft/onnxruntime/releases/download/v1.20.1/onnxruntime-osx-universal2-1.20.1.tgz"
+    onnxruntime_github_url = "https://github.com/microsoft/onnxruntime/releases/download"
+    onnxruntime_version = "1.20.1"
+    if utils.windows():
+        return f"{onnxruntime_github_url}/v{onnxruntime_version}/onnxruntime-win-x64-gpu-{onnxruntime_version}.zip"
+    if utils.linux_x64():
+        return f"{onnxruntime_github_url}/v{onnxruntime_version}/onnxruntime-linux-x64-gpu-{onnxruntime_version}.tgz"
+    if utils.linux_arm():
+        return f"{onnxruntime_github_url}/v{onnxruntime_version}/onnxruntime-linux-aarch64-{onnxruntime_version}.tgz"
     raise RuntimeError(f"Unsupported onnxruntime system/machine: {platform.system()}/{platform.machine()}")
 
 
