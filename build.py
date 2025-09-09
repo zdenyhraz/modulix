@@ -6,7 +6,7 @@ from tools.setup import configuration, buildtools, opencv, onnxruntime
 
 
 def configure(args):
-    log.info(f"Configuring target {args.targets}")
+    log.info(f"Configuring {args.targets}")
     configure_args = {
         'CMAKE_BUILD_TYPE': args.build_type,
         'OPENCV_DIR': args.opencv_dir,
@@ -14,13 +14,13 @@ def configure(args):
     }
     os.makedirs(args.build_dir, exist_ok=True)
     utils.run(f"cmake -B {args.build_dir} {utils.generate_configure_args(configure_args)} {f'-G {args.generator}' if args.generator else ''}")
-    log.info(f'Target {args.targets} configured successfully')
+    log.info(f'{args.targets} configured successfully')
 
 
 def build(args):
-    log.info(f"Building target {args.targets}")
+    log.info(f"Building {args.targets}")
     utils.run(f'cmake --build {args.build_dir} --config {args.build_type} --target {args.targets} -j {args.jobs}')
-    log.info(f'Target {args.targets} built successfully')
+    log.info(f'{args.targets} built successfully')
 
 
 if __name__ == '__main__':
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--jobs', help='build jobs', type=int, required=False, default=os.cpu_count())
     args = parser.parse_args()
 
-    log.info(f"Setting up target {args.targets}")
+    log.info(f"Setting up {args.targets}")
     log.debug(f'system: {platform.system()}')
     log.debug(f'machine: {platform.machine()}')
     for arg, val in vars(args).items():
