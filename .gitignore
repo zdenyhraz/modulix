@@ -6,6 +6,8 @@ obj/
 __pycache__/
 *_install/
 
+data/perf/
+
 *.zip
 *.dump
 *.dll
