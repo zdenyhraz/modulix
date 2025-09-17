@@ -110,13 +110,13 @@ struct WorkflowEditor
 
   float GetLongestParameterDisplayLength(Module& module)
   {
-    float maxSize = 0;
+    float maxSize = 200;
     for (const auto& [name, param] : module.GetParameters())
       if (param.type == typeid(std::string))
         if (auto textSize = ImGui::CalcTextSize(std::any_cast<std::string>(param.value).c_str()).x; textSize > maxSize)
-          maxSize = textSize;
+          maxSize = textSize + 50;
 
-    return maxSize + 50;
+    return maxSize;
   }
 
   void ShowLabel(const char* label, ImColor color)
@@ -174,6 +174,8 @@ struct WorkflowEditor
   {
     if (param.type == typeid(float))
       ImGui::InputFloat(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<float>(&param.value), 0.01f, 1.0f, "%.3f");
+    else if (param.type == typeid(int))
+      ImGui::InputInt(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<int>(&param.value));
     else if (param.type == typeid(std::string))
       ImGui::InputText(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<std::string>(&param.value));
     else if (param.type == typeid(bool))
