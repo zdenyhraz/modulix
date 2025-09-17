@@ -4,6 +4,7 @@
 #include "Modules/DrawObjects.hpp"
 #include "Modules/OnnxDetection.hpp"
 #include "Modules/PerfTestCV.hpp"
+#include "Modules/PerfTestCVIterate.hpp"
 #include "Utils/Async.hpp"
 
 void WorkflowEditorWindow::Initialize()
@@ -62,11 +63,26 @@ void WorkflowEditorWindow::CreateWorkflow()
     editor.workflow.Connect(onnx, draw, "objects");
     editor.workflow.Connect(draw, save, "image");
   }
-  else
+  else if constexpr (false)
   {
     editor.workflow.SetName("Performance test OpenCV");
     auto& load = editor.workflow.AddModule<LoadImage>();
     auto& perf = editor.workflow.AddModule<PerfTestCV>();
+    auto& save = editor.workflow.AddModule<SaveImage>();
+
+    load.SetParameter("image path", std::string("data/perf/perf_image.jpg"));
+    save.SetParameter("image path", std::string("data/perf/perf_result.jpg"));
+
+    editor.workflow.Connect(editor.workflow.GetStart(), perf);
+    editor.workflow.Connect(load, perf, "image");
+    editor.workflow.Connect(perf, save);
+    editor.workflow.Connect(perf, save, "image");
+  }
+  else
+  {
+    editor.workflow.SetName("Performance test OpenCV iterate");
+    auto& load = editor.workflow.AddModule<LoadImage>();
+    auto& perf = editor.workflow.AddModule<PerfTestCVIterate>();
     auto& save = editor.workflow.AddModule<SaveImage>();
 
     load.SetParameter("image path", std::string("data/perf/perf_image.jpg"));
