@@ -173,9 +173,29 @@ struct WorkflowEditor
   void RenderParameter(Module::Parameter& param, const std::string& moduleName)
   {
     if (param.type == typeid(float))
-      ImGui::InputFloat(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<float>(&param.value), 0.01f, 1.0f, "%.3f");
+    {
+      if (param.minimum.has_value() and param.maximum.has_value())
+      {
+        const float min = std::any_cast<float>(param.minimum.value());
+        const float max = std::any_cast<float>(param.maximum.value());
+        ImGui::SliderFloat(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<float>(&param.value), min, max, "%.3f");
+      }
+      else
+      {
+        ImGui::InputFloat(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<float>(&param.value), 0.01f, 1.0f, "%.3f");
+      }
+    }
     else if (param.type == typeid(int))
-      ImGui::InputInt(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<int>(&param.value));
+    {
+      if (param.minimum.has_value() and param.maximum.has_value())
+      {
+        const int min = std::any_cast<int>(param.minimum.value());
+        const int max = std::any_cast<int>(param.maximum.value());
+        ImGui::SliderInt(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<int>(&param.value), min, max);
+      }
+      else
+        ImGui::InputInt(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<int>(&param.value));
+    }
     else if (param.type == typeid(std::string))
       ImGui::InputText(fmt::format("{}##{}", param.name, moduleName).c_str(), std::any_cast<std::string>(&param.value));
     else if (param.type == typeid(bool))

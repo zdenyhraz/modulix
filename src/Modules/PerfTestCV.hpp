@@ -20,7 +20,7 @@ public:
     GenerateModuleName();
     DefineInputParameter<cv::Mat>("image");
     DefineOutputParameter<cv::Mat>("image");
-    DefineParameter<float>("blur amount", 0.01);
-    DefineParameter<int>("blur iterations", 10);
+    DefineParameter<float>("blur amount", 0.01, 0.0, 0.1);
+    DefineParameter<int>("blur iterations", 10, 0, 20);
   }
 };

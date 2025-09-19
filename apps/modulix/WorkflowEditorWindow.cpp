@@ -63,7 +63,7 @@ void WorkflowEditorWindow::CreateWorkflow()
     editor.workflow.Connect(onnx, draw, "objects");
     editor.workflow.Connect(draw, save, "image");
   }
-  else if constexpr (false)
+  else if constexpr (true)
   {
     editor.workflow.SetName("Performance test OpenCV");
     auto& load = editor.workflow.AddModule<LoadImage>();

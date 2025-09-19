@@ -21,8 +21,8 @@ public:
     GenerateModuleName();
     DefineInputParameter<cv::Mat>("image");
     DefineOutputParameter<cv::Mat>("image");
-    DefineParameter<float>("relative blur x", 0.05);
-    DefineParameter<float>("relative blur y", 0.15);
+    DefineParameter<float>("relative blur x", 0.05, 0, 0, 2);
+    DefineParameter<float>("relative blur y", 0.15, 0, 0.2);
     DefineParameter<bool>("median", false);
   }
 };

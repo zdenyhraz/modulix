@@ -46,11 +46,8 @@ public:
     const std::type_info& type;
     std::string name;
     std::any value;
-
-    template <typename T>
-    Parameter(const std::type_info& _type, const std::string& _name, const T& _value) : type(_type), name(_name), value(_value)
-    {
-    }
+    std::optional<std::any> minimum;
+    std::optional<std::any> maximum;
   };
 
   struct Connection
@@ -94,6 +91,13 @@ protected:
   void DefineParameter(const std::string& paramName, const T& defaultValue)
   {
     parameters.emplace(paramName, Parameter{typeid(T), paramName, defaultValue});
+  }
+
+  template <typename T>
+    requires std::is_arithmetic_v<T>
+  void DefineParameter(const std::string& paramName, const T& defaultValue, const T& minValue, const T& maxValue)
+  {
+    parameters.emplace(paramName, Parameter{typeid(T), paramName, defaultValue, minValue, maxValue});
   }
 
   template <typename T>
@@ -267,7 +271,10 @@ public:
     if (param.type != std::type_index(typeid(T)))
       throw std::runtime_error(fmt::format("{}: Parameter '{}' type mismatch: {} != {}", GetName(), paramName, typeid(T).name(), param.type.name()));
 
-    param.value = value;
+    if (param.minimum.has_value() or param.maximum.has_value())
+      param.value = std::clamp(value, std::any_cast<const T&>(param.minimum), std::any_cast<const T&>(param.maximum));
+    else
+      param.value = value;
   }
 
   void Reset()
